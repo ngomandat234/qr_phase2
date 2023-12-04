@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head.ejs') %>
+  <body>
+    <%- include('../../partials/loader.ejs') %>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('../../partials/main-header.ejs') %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('../../partials/sidebar.ejs', {current_user: current_user}); %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>User Profile</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">User</li>
+                    <li class="breadcrumb-item active">profile</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid blog-page">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header pb-0">
+                          <h4 class="card-title mb-0">My Profile</h4>
+                          <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                        </div>
+                        <div class="card-body">
+                          <form action="/my-profile/change_password" method="POST">
+                            <div class="row mb-2">
+                              <div class="profile-title">
+                                <div class="media">                        
+                                    <img class="img-70 rounded-circle" style="object-fit:contain" alt="" src="/uploader/<%= current_user.avatar %>">
+                                    <div class="media-body">
+                                        <h3 class="mb-1 f-20 txt-primary"><%= current_user.name %></h3>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Email-Address</label>
+                              <input class="form-control" value="<%= current_user.email %>" disabled>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Password Old</label>
+                              <input class="form-control" type="password" name="password_old" placeholder="******">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Password</label>
+                              <input class="form-control" type="password" name="password" placeholder="******">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Password Confirmation</label>
+                              <input class="form-control" type="password" name="password_confirmation" placeholder="******">
+                            </div>
+                            <% if (errors !== undefined && errors.length > 0) { %>
+                              <div class="alert alert-danger">
+                                <%= errors[0].message %>
+                              </div>
+                            <% }%> 
+                            <% if (notices !== undefined && notices.length > 0) { %>
+                              <div class="alert alert-success">
+                                <%= notices[0].message %>
+                              </div>
+                            <% }%> 
+                            <div class="form-footer">
+                              <button class="btn btn-primary btn-block">Update Password</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header pb-0">
+                          <h4 class="card-title mb-0">Edit Profile</h4>
+                          <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-6">
+                              <form action="/my-profile" method="POST">
+                                <div class="mb-3">
+                                  <label class="form-label">Name</label>
+                                  <input class="form-control" placeholder="Ngo Man Dat" value="<%= current_user.name %>" name="name">
+                                </div>
+                                <div class="form-footer">
+                                  <button class="btn btn-primary btn-block" type="submit">Save</button>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="col-6">
+                              <div class="w-50 float-end">
+                                <img src="<%= current_user.qrCode %>" alt="" class="w-100 h-100">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header pb-0">
+                        <h4 class="card-title mb-0">Edit Profile</h4>
+                        <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-6">
+                            <form method="POST" action="/my-profile/change_avatar" enctype="multipart/form-data">
+                              <div class="mb-3">
+                                <label class="form-label">avatar</label>
+                                <input type="file" class="form-control-file" name="img" id="input_avt" required>
+                              </div>
+                              <div class="form-footer">
+                                <button class="btn btn-primary btn-block">Save</button>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="col-6">
+                            <div class="w-50 float-end">
+                              <img src="/uploader/<%= current_user.avatar %>" alt="" class="w-100 h-100" id="avt_user" style="width: 236px; height: 238px;" >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- tap on top starts-->
+        <div class="tap-top"><i class="icon-control-eject"></i></div>
+        <!-- tap on tap ends-->
+        <!-- footer start-->    
+      </div>
+    </div>
+    <script>
+      document.getElementById('input_avt').addEventListener('change', () =>{
+        document.getElementById('avt_user').src = URL.createObjectURL(document.getElementById('input_avt').files[0]);
+      })
+    </script>
+    <%- include('../../partials/scripts.ejs') %>
+  </body>
+</html>

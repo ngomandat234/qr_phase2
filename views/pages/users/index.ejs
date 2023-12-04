@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head.ejs') %>
+  <body>
+    <%- include('../../partials/loader.ejs') %>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('../../partials/main-header.ejs') %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('../../partials/sidebar.ejs', {current_user: current_user}) %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Users</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item active">Users</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid blog-page">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="display" id="user-table">
+                    <thead class="table-primary">
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>QR Code</th>
+                        <th>Options</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% users.forEach((item, index) => { %>
+                        <tr>
+                          <td><%= index + 1 %></td>
+                          <td>
+                            <img src="/uploader/<%= item.avatar %>" alt="<%= item.avatar %>" style="width: 80px; height: 80px; object-fit: contain;" />
+                            <%= item.name %>
+                          </td>
+                          <td><%= item.email %></td>
+                          <td><%= item.group_user%></td>
+                          <td><img src="<%= item.qrCode %>" alt="qrcode-<%= index + 1 %>" style="height:100px; width: 100px;"></td>
+                          <td class="d-flex align-items-center justify-content-around">                       
+                              <a href="/users/<%= item._id %>" class="btn btn-primary">Tracking -></a>
+
+                                <button class="btn btn-danger" onclick="deleteItem('<%= item._id %>')">Delete</button>
+                          </td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>                
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- tap on top starts-->
+        <div class="tap-top"><i class="icon-control-eject"></i></div>
+        <!-- tap on tap ends-->
+        <!-- footer start-->    
+      </div>
+    </div>
+    <script>
+      function deleteItem(_id){
+        const confirmed = confirm('Chắc chắn xóa ?');
+        console.log(this);
+        if (confirmed){
+          window.location.assign(`/users/${_id}/delete`);
+        }
+      }
+
+    </script>
+    <%- include('../../partials/scripts.ejs') %>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head.ejs') %>
+  <body>
+    <%- include('../../partials/loader.ejs') %>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('../../partials/main-header.ejs') %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('../../partials/sidebar.ejs', {current_user: current_user}) %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Users</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item active">Users</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid blog-page">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                          <table>
+                              <tbody>
+                                    <tr>
+                                        <td class="py-3 w-50"><strong>Name</strong></td>
+                                        <td class="py-3 w-75"><%= user.name %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 w-50"><strong>Email</strong></td>
+                                        <td class="py-3 w-75"><%= user.email %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 w-50"><strong>Password</strong></td>
+                                        <td class="py-3 w-75">********</td>
+                                    </tr>
+                              </tbody>
+                          </table>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-6">
+                              <p><strong>QrCode</strong></p>
+                              <img src="<%= user.qrCode %>" alt="code-<%= user._id %>">
+                            </div>
+                            <div class="col-6">
+                              <p><strong>Avatar</strong></p>
+                              <img src="/uploader/<%= user.avatar %>" alt="code-<%= user._id %>" style="width: 164px; height: 164px; object-fit:contain; border: 1px solid #888; padding: 4px; border-radius: 4px;">
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                  <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <h3>Tracking</h3>
+                            <table class="display" id="user-table">
+                                <thead class="table-primary">
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Time</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <% trackings.forEach((item, index) => { %>
+                                        <tr>
+                                          <td><%= index + 1 %></td>
+                                          <td><%= moment(item.createdAt).tz('Asia/Ho_Chi_Minh').format("HH:mm DD/MM/YYYY") %></td>                            
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                              </table>
+                        </div>
+                        <div class="text-end mt-2">
+                          <a href="/users/<%= user._id %>/export_tracking" class="btn btn-success" target="_blank">Export</a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <h3>Printing</h3>
+                          <table class="display" id="printing-table">
+                              <thead class="table-primary">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Time</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  <% printings.forEach((item, index) => { %>
+                                      <tr>
+                                        <td><%= index + 1 %></td>
+                                        <td><%= moment(item.createdAt).tz('Asia/Ho_Chi_Minh').format("HH:mm DD/MM/YYYY") %></td>                            
+                                      </tr>
+                                  <% }) %>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="text-end mt-2">
+                        <a href="/users/<%= user._id %>/export_printing" class="btn btn-success" target="_blank">Export</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- tap on top starts-->
+        <div class="tap-top"><i class="icon-control-eject"></i></div>
+        <!-- tap on tap ends-->
+        <!-- footer start-->    
+      </div>
+    </div>
+    <%- include('../../partials/scripts.ejs') %>
+  </body>
+</html>
